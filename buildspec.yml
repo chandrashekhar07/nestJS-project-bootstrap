@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    NPM_CONFIG_UNSAFE_PERM: "true"
+    NPM_CONFIG_UNSAFE_PERM: 'true'
 
 phases:
   install:
@@ -18,12 +18,17 @@ phases:
       - echo Build phase started on `date`...
       - npm run build
       - echo Build phase completed on `date`...
-      # - zip -r blushrush-dev.zip dist/* .ebextensions package.json
+
   post_build:
     commands:
       - echo Post-Build phase started on `date`...
-      - npm run migration:generate
-      - npm run migration:run
+
+      - echo Installed dependencies are listed below
+
+      - npm list --depth 0
+
+      - npm run copy:package-files
+
       - echo Post-Build phase completed on `date`...
 
 artifacts:

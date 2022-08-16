@@ -22,3 +22,8 @@ npm-debug.log
 
 # google
 /src/**/service-account.json
+
+#env
+.env
+.development.env
+.production.env

@@ -7,10 +7,9 @@ import {
     HttpCode
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { LoggerService } from '../../common/provider';
-import { PassengerPipe } from '../flow';
-import { PassengerData, PassengerInput } from '../model';
-import { PassengerService } from '../service';
+import { LoggerService } from '../../common/providers';
+import { Passenger, PassengerInput } from '../model';
+import { PassengerService } from '../services';
 
 @Controller('passengers')
 @ApiTags('passenger')
@@ -23,22 +22,19 @@ export class PassengerController {
 
     @Get()
     @HttpCode(HttpStatus.OK)
-    @ApiResponse({ status: HttpStatus.OK, isArray: false, type: PassengerData })
-    public async find(): Promise<PassengerData[]> {
+    @ApiResponse({ status: HttpStatus.OK, isArray: false, type: Passenger })
+    public async find(): Promise<Passenger[]> {
         this.logger.info('Getting data for passengers');
-        const passengers = await this.passengerService.find();
-        return passengers.map((passenger) => passenger.buildData());
+        return this.passengerService.find();
     }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    @ApiResponse({ status: HttpStatus.CREATED, type: PassengerData })
-    public async create(
-        @Body(new PassengerPipe()) input: PassengerInput
-    ): Promise<PassengerData> {
+    @ApiResponse({ status: HttpStatus.CREATED, type: Passenger })
+    public async create(@Body() input: PassengerInput): Promise<Passenger> {
         const passenger = await this.passengerService.create(input);
         this.logger.info(`Created new passenger with ID ${passenger.id}`);
 
-        return passenger.buildData();
+        return passenger;
     }
 }
