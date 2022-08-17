@@ -20,7 +20,8 @@
     "eslint": "./node_modules/.bin/eslint src/**/*.ts",
     "prettier-format": "prettier --config .prettierrc src/**/*.ts --write",
     "copy:package-files": "cp package.json dist/package.json && cp package-lock.json dist/package-lock.json",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docs": "npx @compodoc/compodoc -p tsconfig.json -s"
   },
   "dependencies": {
     "@aws-sdk/client-cloudwatch-logs": "^3.150.0",
@@ -43,6 +44,7 @@
     "winston-cloudwatch": "^6.1.0"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.19",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.1",
     "@nestjs/testing": "^9.0.9",
