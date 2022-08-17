@@ -1,0 +1,154 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>project-name documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">project-name documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h2 id="1-getting-started">1. Getting started</h2>
+<h3 id="11-requirements">1.1 Requirements</h3>
+<p>Before starting, make sure you have at least those components on your workstation:</p>
+<ul>
+<li>An up-to-date release of <a href="https://nodejs.org/">NodeJS</a> and NPM</li>
+<li>A PostgreSQL database.</li>
+</ul>
+<h3 id="12-project-configuration">1.2 Project configuration</h3>
+<p>Start by installing all the dependencies of the project.</p>
+<div><pre class="line-numbers"><code class="language-sh">npm install</code></pre></div><p>Once the dependencies are installed, you can now configure your project by creating a new <code>.env</code> file containing your environment variables used for development.</p>
+<div><pre class="line-numbers"><code class="language-none">.env</code></pre></div><h3 id="13-launch-and-discover">1.3 Launch and discover</h3>
+<p>You are now ready to launch the NestJS application using the command below.</p>
+<div><pre class="line-numbers"><code class="language-sh">
+# Launch the development server with TSNode
+npm run dev</code></pre></div><p>You can now head to <code>http://localhost:4000/docs</code> and see your API Swagger docs. The example passenger API is located at the <code>http://localhost:4000/api/v1/passengers</code> endpoint.</p>
+<h2 id="2-project-structure">2. Project structure</h2>
+<p>This template was made with a well-defined directory structure.</p>
+<div><pre class="line-numbers"><code class="language-sh">src/
+├── migrations/  # TypeORM migrations created using &quot;npm run migration:create&quot;
+├── modules
+│   ├── app.module.ts
+│   ├── common/  # The common module contains pipes, guards, service and provider used in the whole application
+│   ├── passenger/  # A module example that manages &quot;passenger&quot; resources
+│   │   ├── controller/
+│   │   │   └── passenger.controller.ts
+│   │   ├── flow/  # The &quot;flow&quot; directory contains the pipes, interceptors and everything that may change the request or response flow
+│   │   │   └── passenger.pipe.ts
+│   │   ├── model/
+│   │   │   ├── passenger.data.ts  # The model that will be returned in the response
+│   │   │   ├── passenger.entity.ts  # The actual TypeORM entity
+│   │   │   └── passenger.input.ts  # The model that is used in the request
+│   │   ├── passenger.module.ts
+│   │   ├── service/
+│   │   │   └── passenger.service.ts
+│   │   └── spec/
+│   └── tokens.ts
+└── server.ts</code></pre></div><h2 id="3-default-npm-commands">3. Default NPM commands</h2>
+<p>The NPM commands below are already included with this template and can be used to quickly run, build and test your project.</p>
+<div><pre class="line-numbers"><code class="language-sh">
+# Run the application using &quot;ts-node&quot;
+npm run dev
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
