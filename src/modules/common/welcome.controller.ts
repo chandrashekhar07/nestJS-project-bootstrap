@@ -6,6 +6,7 @@ import {
     Version,
     VERSION_NEUTRAL
 } from '@nestjs/common';
+import { VERSION } from './models/constants';
 
 @Controller()
 export class WelcomeController {
@@ -13,6 +14,6 @@ export class WelcomeController {
     @Get()
     @HttpCode(HttpStatus.OK)
     public login(): string {
-        return 'Welcome, Build Version : 1.1';
+        return `Welcome, Build Version : ${VERSION}`;
     }
 }

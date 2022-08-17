@@ -1,11 +1,4 @@
-import {
-    Body,
-    Controller,
-    Get,
-    HttpStatus,
-    Post,
-    HttpCode
-} from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, HttpCode } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoggerService } from '../../common/providers';
 import { Passenger, PassengerInput } from '../model';

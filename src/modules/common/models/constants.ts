@@ -6,3 +6,5 @@ export const API_DEFAULT_PREFIX = '/api';
 export const SWAGGER_TITLE = 'Swagger API';
 export const SWAGGER_DESCRIPTION = 'API Documentation';
 export const SWAGGER_PREFIX = '/docs';
+
+export const VERSION = '1.0.1';

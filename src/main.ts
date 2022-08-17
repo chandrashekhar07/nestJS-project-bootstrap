@@ -9,7 +9,8 @@ import { configProvider } from './modules/common/providers';
 import {
     SWAGGER_TITLE,
     SWAGGER_DESCRIPTION,
-    SWAGGER_PREFIX
+    SWAGGER_PREFIX,
+    VERSION
 } from './modules/common/models/constants';
 
 async function bootstrap(): Promise<void> {
@@ -38,7 +39,7 @@ async function bootstrap(): Promise<void> {
 }
 
 function createSwagger(app: INestApplication) {
-    const version = process.env.npm_package_version || ' ';
+    const version = VERSION;
     const options = new DocumentBuilder()
         .setTitle(SWAGGER_TITLE)
         .setDescription(SWAGGER_DESCRIPTION)
