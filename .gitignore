@@ -28,4 +28,4 @@ npm-debug.log
 .development.env
 .production.env
 
-documentation
+/documentation
