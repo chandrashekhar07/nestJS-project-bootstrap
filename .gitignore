@@ -27,3 +27,5 @@ npm-debug.log
 .env
 .development.env
 .production.env
+
+documentation
