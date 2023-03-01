@@ -1,19 +1,25 @@
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as winston from 'winston';
 import * as WinstonCloudWatch from 'winston-cloudwatch';
+import { IConfig } from '../interfaces/config.interface';
 import { isDeploymentEnv } from '../utilities';
-import { configProvider } from './config.provider';
-
+@Injectable()
 export class LoggerService {
     private readonly instance: winston.Logger;
 
-    public constructor() {
+    public constructor(private readonly configService: ConfigService<IConfig, true>) {
+        const awsConfig = this.configService.get('aws', {
+            infer: true
+        });
+
         const cloudwatchConfig = {
             name: 'cloud watch log',
-            logGroupName: configProvider().CLOUDWATCH_GROUP_NAME,
-            logStreamName: configProvider().CLOUDWATCH_LOG_STREAM_NAME,
-            awsAccessKeyId: configProvider().AWS_ACCESS_KEY,
-            awsSecretKey: configProvider().AWS_SECRET_KEY,
-            awsRegion: configProvider().AWS_REGION,
+            logGroupName: awsConfig.cloudwatchGroupName,
+            logStreamName: awsConfig.cloudwatchLogStreamName,
+            awsAccessKeyId: awsConfig.accessKey,
+            awsSecretKey: awsConfig.secretKey,
+            awsRegion: awsConfig.region,
             messageFormatter: ({ level, message, stack }) => {
                 if (stack) {
                     return `[${level}]  :   ${message}\n -  ${stack}`;

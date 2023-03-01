@@ -1,14 +1,14 @@
 import * as Joi from '@hapi/joi';
 import * as _ from 'lodash';
+import { API_DEFAULT_PORT } from '../models/constants';
 import { IConfig } from '../interfaces/config.interface';
-import { API_DEFAULT_PORT, API_DEFAULT_PREFIX } from '../models/constants';
 
-export const configProvider = (): IConfig => {
+export const config = (): IConfig => {
     const env = process.env;
 
     const validationSchema = Joi.object().unknown().keys({
         API_PORT: Joi.string().required(),
-        SWAGGER_ENABLE: Joi.string().required(),
+        SWAGGER_ENABLE: Joi.string().optional(),
 
         TYPEORM_HOST: Joi.string().required(),
         TYPEORM_PORT: Joi.string().required(),
@@ -32,24 +32,28 @@ export const configProvider = (): IConfig => {
     }
 
     return {
-        API_PORT: _.toNumber(env.API_PORT) || API_DEFAULT_PORT,
-        API_PREFIX: env.API_PREFIX || API_DEFAULT_PREFIX,
-        SWAGGER_ENABLE: env.SWAGGER_ENABLE === 'true',
+        apiPort: _.toNumber(env.API_PORT) || API_DEFAULT_PORT,
+        swagger: {
+            enabled: env.SWAGGER_ENABLE === 'true'
+        },
 
-        TYPEORM_CONNECTION: `${env.TYPEORM_CONNECTION}`,
-        TYPEORM_HOST: `${env.TYPEORM_HOST}`,
-        TYPEORM_PORT: _.toNumber(env.TYPEORM_PORT),
-        TYPEORM_USERNAME: `${env.TYPEORM_USERNAME}`,
-        TYPEORM_PASSWORD: `${env.TYPEORM_PASSWORD}`,
-        TYPEORM_DATABASE: `${env.TYPEORM_DATABASE}`,
-        TYPEORM_ENTITIES: `${env.TYPEORM_ENTITIES}`,
-        TYPEORM_SYNCHRONIZE: env.TYPEORM_SYNCHRONIZE === 'true',
-        TYPEORM_MIGRATIONS_AUTO_RUN: env.TYPEORM_MIGRATIONS_AUTO_RUN === 'true',
+        database: {
+            host: env.TYPEORM_HOST!,
+            port: _.toNumber(env.TYPEORM_PORT),
+            username: env.TYPEORM_USERNAME!,
+            password: env.TYPEORM_PASSWORD!,
+            database: env.TYPEORM_DATABASE!,
+            entities: env.TYPEORM_ENTITIES!,
+            synchronize: env.TYPEORM_SYNCHRONIZE === 'true',
+            migrationsAutoRun: env.TYPEORM_MIGRATIONS_AUTO_RUN === 'true'
+        },
 
-        CLOUDWATCH_GROUP_NAME: `${env.CLOUDWATCH_GROUP_NAME}`,
-        CLOUDWATCH_LOG_STREAM_NAME: `${env.CLOUDWATCH_LOG_STREAM_NAME}`,
-        AWS_ACCESS_KEY: `${env.AWS_ACCESS_KEY}`,
-        AWS_SECRET_KEY: `${env.AWS_SECRET_KEY}`,
-        AWS_REGION: `${env.AWS_REGION}`
+        aws: {
+            cloudwatchGroupName: env.CLOUDWATCH_GROUP_NAME!,
+            cloudwatchLogStreamName: env.CLOUDWATCH_LOG_STREAM_NAME!,
+            accessKey: env.AWS_ACCESS_KEY!,
+            secretKey: env.AWS_SECRET_KEY!,
+            region: env.AWS_REGION!
+        }
     };
 };

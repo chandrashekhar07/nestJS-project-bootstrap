@@ -5,18 +5,20 @@ import helmet from 'helmet';
 import { INestApplication, VersioningType } from '@nestjs/common';
 import { ApplicationModule } from './modules/app.module';
 import { CommonModule, LogInterceptor } from './modules/common';
-import { configProvider } from './modules/common/providers';
 import {
     SWAGGER_TITLE,
     SWAGGER_DESCRIPTION,
     SWAGGER_PREFIX,
-    VERSION
+    VERSION,
+    API_DEFAULT_PREFIX
 } from './modules/common/models/constants';
+import { ConfigService } from '@nestjs/config';
+import { IConfig } from './modules/common/interfaces/config.interface';
 
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(ApplicationModule);
 
-    app.setGlobalPrefix(configProvider().API_PREFIX);
+    app.setGlobalPrefix(API_DEFAULT_PREFIX);
 
     app.enableVersioning({
         type: VersioningType.URI,
@@ -26,16 +28,18 @@ async function bootstrap(): Promise<void> {
 
     app.enableCors();
 
-    if (configProvider().SWAGGER_ENABLE) {
-        createSwagger(app);
-    }
+    createSwagger(app);
 
     app.use(helmet());
 
     const logInterceptor = app.select(CommonModule).get(LogInterceptor);
     app.useGlobalInterceptors(logInterceptor);
 
-    await app.listen(configProvider().API_PORT);
+    const port = app.get(ConfigService).get<IConfig>('API_PORT', {
+        infer: true
+    });
+
+    await app.listen(port);
 }
 
 function createSwagger(app: INestApplication) {
