@@ -1,0 +1,33 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build output directory
+dist/
+
+# Ignore coverage reports
+coverage/
+
+# Ignore logs
+logs/
+
+# Ignore temporary files
+*.tmp
+
+# Ignore configuration files
+*.config.js
+
+# Ignore compiled TypeScript files
+*.js
+
+# Ignore compiled JavaScript files
+*.ts
+
+# Ignore editor-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore version control files
+.git/
+.gitignore

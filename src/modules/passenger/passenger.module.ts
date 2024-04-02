@@ -10,6 +10,6 @@ import { PassengerService } from './services';
     imports: [CommonModule, TypeOrmModule.forFeature([Passenger])],
     providers: [PassengerService],
     controllers: [PassengerController],
-    exports: []
+    exports: [],
 })
 export class PassengerModule {}

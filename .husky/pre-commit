@@ -1,5 +1,15 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-npm run eslint
-npm run prettier-format
+echo '🏗️👷 Styling,linting and building your project before committing'
+
+# lint staged files
+npm run lint-staged ||
+    (
+        echo 'Linting failed. Make the required changes listed above, add changes and try to commit again.'
+
+        false
+    )
+
+# If everything passes... Now we can commit
+echo '✅✅✅✅ You win this time... I am commiting this now. ✅✅✅✅'

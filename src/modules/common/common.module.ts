@@ -1,13 +1,11 @@
 import { Global, Module } from '@nestjs/common';
-import { LogInterceptor } from './interceptors';
-import { LoggerService } from './providers';
-import { WelcomeController } from './welcome.controller';
+import { LoggerService } from './services';
 
 @Global()
 @Module({
     imports: [],
-    providers: [LoggerService, LogInterceptor],
-    exports: [LoggerService, LogInterceptor],
-    controllers: [WelcomeController]
+    providers: [LoggerService],
+    exports: [LoggerService],
+    controllers: [],
 })
 export class CommonModule {}

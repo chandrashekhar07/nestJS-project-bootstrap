@@ -1,6 +1,13 @@
-import { Body, Controller, Get, HttpStatus, Post, HttpCode } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    HttpStatus,
+    Post,
+    HttpCode,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { LoggerService } from '../../common/providers';
+import { LoggerService } from '../../common/services';
 import { Passenger, PassengerInput } from '../model';
 import { PassengerService } from '../services';
 
@@ -10,7 +17,7 @@ import { PassengerService } from '../services';
 export class PassengerController {
     public constructor(
         private readonly logger: LoggerService,
-        private readonly passengerService: PassengerService
+        private readonly passengerService: PassengerService,
     ) {}
 
     @Get()
@@ -18,6 +25,7 @@ export class PassengerController {
     @ApiResponse({ status: HttpStatus.OK, isArray: false, type: Passenger })
     public async find(): Promise<Passenger[]> {
         this.logger.info('Getting data for passengers');
+
         return this.passengerService.find();
     }
 

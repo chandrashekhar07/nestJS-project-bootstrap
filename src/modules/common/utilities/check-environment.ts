@@ -1,9 +1,11 @@
-export function isProductionEnv(): boolean {
-    const ENV = process.env.NODE_ENV || '';
+export function isProductionEnvironment(): boolean {
+    const ENV = process.env.NODE_ENV ?? '';
+
     return ENV.trim() === 'production';
 }
 
-export const isDeploymentEnv = (): boolean => {
-    const ENV = process.env.NODE_ENV || '';
+export const isDeployedEnvironment = (): boolean => {
+    const ENV = process.env.NODE_ENV ?? '';
+
     return ENV.trim() === 'production' || ENV.trim() === 'staging';
 };
