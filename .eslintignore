@@ -16,12 +16,6 @@ logs/
 # Ignore configuration files
 *.config.js
 
-# Ignore compiled TypeScript files
-*.js
-
-# Ignore compiled JavaScript files
-*.ts
-
 # Ignore editor-specific files
 .vscode/
 .idea/
