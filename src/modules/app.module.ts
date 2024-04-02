@@ -1,29 +1,28 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import type { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import { CommonModule } from './common';
+import type { IConfig } from './common/interfaces/config.interface';
+import { CoreModule } from './core/core.module';
 import { PassengerModule } from './passenger/passenger.module';
-import { APP_FILTER } from '@nestjs/core';
-import { HttpExceptionFilter } from './common/exception.filter';
-import { config } from './common/providers/config.provider';
-import { IConfig } from './common/interfaces/config.interface';
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 @Module({
     imports: [
-        ConfigModule.forRoot({
-            load: [config],
-            isGlobal: true,
-            cache: true
-        }),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (configService: ConfigService<IConfig, true>) => {
-                const { host, password, port, username, database, synchronize } =
-                    configService.get('database', {
-                        infer: true
-                    });
+                const {
+                    host,
+                    password,
+                    port,
+                    username,
+                    database,
+                    shouldSynchronize,
+                } = configService.get('database', {
+                    infer: true,
+                });
 
                 return {
                     type: 'postgres',
@@ -32,19 +31,15 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
                     username,
                     password,
                     database,
-                    synchronize,
-                    autoLoadEntities: true
+                    synchronize: shouldSynchronize,
+                    autoLoadEntities: true,
                 } as PostgresConnectionOptions;
-            }
+            },
         }),
         PassengerModule,
-        CommonModule
+        CommonModule,
+        CoreModule,
     ],
-    providers: [
-        {
-            provide: APP_FILTER,
-            useClass: HttpExceptionFilter
-        }
-    ]
+    providers: [],
 })
 export class ApplicationModule {}

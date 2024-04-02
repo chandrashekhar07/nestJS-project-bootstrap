@@ -11,16 +11,13 @@ export interface IConfig {
         readonly username: string;
         readonly password: string;
         readonly database: string;
-        readonly entities: string;
-        readonly synchronize: boolean;
+        readonly shouldSynchronize: boolean;
         readonly migrationsAutoRun: boolean;
     };
 
     aws: {
         cloudwatchGroupName: string;
         cloudwatchLogStreamName: string;
-        accessKey: string;
-        secretKey: string;
         region: string;
     };
 }

@@ -2,43 +2,50 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as winston from 'winston';
 import * as WinstonCloudWatch from 'winston-cloudwatch';
-import { IConfig } from '../interfaces/config.interface';
-import { isDeploymentEnv } from '../utilities';
+import type { IConfig } from '../interfaces/config.interface';
+import { isDeployedEnvironment } from '../utilities';
+import type { LogEntry } from 'winston';
+
 @Injectable()
 export class LoggerService {
     private readonly instance: winston.Logger;
 
-    public constructor(private readonly configService: ConfigService<IConfig, true>) {
+    public constructor(
+        private readonly configService: ConfigService<IConfig, true>,
+    ) {
         const awsConfig = this.configService.get('aws', {
-            infer: true
+            infer: true,
         });
+
+        const { cloudwatchGroupName, cloudwatchLogStreamName, region } =
+            awsConfig;
 
         const cloudwatchConfig = {
             name: 'cloud watch log',
-            logGroupName: awsConfig.cloudwatchGroupName,
-            logStreamName: awsConfig.cloudwatchLogStreamName,
-            awsAccessKeyId: awsConfig.accessKey,
-            awsSecretKey: awsConfig.secretKey,
-            awsRegion: awsConfig.region,
-            messageFormatter: ({ level, message, stack }) => {
+            logGroupName: cloudwatchGroupName,
+            logStreamName: cloudwatchLogStreamName,
+            awsRegion: region,
+            messageFormatter: (logObject: LogEntry): string => {
+                const { level, message, stack } = logObject;
+
                 if (stack) {
                     return `[${level}]  :   ${message}\n -  ${stack}`;
                 }
 
                 return `[${level}]  :   ${message}`;
-            }
+            },
         };
 
-        const format = isDeploymentEnv()
+        const format = isDeployedEnvironment()
             ? winston.format.combine(
                   winston.format.timestamp(),
                   winston.format.json(),
-                  winston.format.errors({ stack: true })
+                  winston.format.errors({ stack: true }),
               )
             : winston.format.combine(
                   winston.format.colorize(),
                   winston.format.simple(),
-                  winston.format.errors({ stack: true })
+                  winston.format.errors({ stack: true }),
               );
 
         this.instance = winston.createLogger({
@@ -47,9 +54,9 @@ export class LoggerService {
             format,
             transports: [
                 new winston.transports.Console({
-                    stderrLevels: ['error']
-                })
-            ]
+                    stderrLevels: ['error'],
+                }),
+            ],
         });
         this.instance.add(new WinstonCloudWatch(cloudwatchConfig));
     }

@@ -1,1 +1,1 @@
-export { isDeploymentEnv, isProductionEnv } from './check-environment';
+export * from './check-environment';

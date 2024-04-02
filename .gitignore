@@ -24,8 +24,8 @@ npm-debug.log
 /src/**/service-account.json
 
 #env
-.env
-.development.env
-.production.env
+*.env
 
+# local files
 /documentation
+.nestjs_repl_history
